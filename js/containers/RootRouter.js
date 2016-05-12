@@ -31,8 +31,7 @@ export default RootRouter;
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1,
-    backgroundColor: '#fefdff'
+    flex: 1
   },
   content: {
     marginTop: 64

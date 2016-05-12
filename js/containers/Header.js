@@ -24,11 +24,22 @@ class Header extends React.Component {
     }
   }
 
+  _renderActionButton() {
+    if (this.props.rightAction) {
+        return (
+          <TouchableOpacity onPress={this.props.rightAction}>
+            <Text style={[styles.linkColor]}>+</Text>
+          </TouchableOpacity>
+        )
+    }
+  }
+
   render() {
     return (
       <View style={styles.header}>
         {this._renderBackButton()}
         <Text style={[styles.textColor]}>{this.props.route.title}</Text>
+        {this._renderActionButton()}
       </View>
     )
   }
@@ -40,20 +51,20 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     height: 64,
-    backgroundColor: '#f9f9fa',
+    backgroundColor: '#00abff',
     paddingTop: 25,
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderColor: '#f5f4f6'
   },
   linkColor: {
-    color: '#4d79ff',
+    color: 'white',
     fontSize: 30
   },
   textColor: {
     flex: 2,
     textAlign: 'center',
-    color: 'black',
+    color: 'white',
     fontSize: 20,
     lineHeight: 30
   }

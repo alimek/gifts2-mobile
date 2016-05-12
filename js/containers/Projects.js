@@ -1,36 +1,46 @@
 import React, {Component} from 'react';
-import {
+import ReactNative from 'react-native';
+import {observer} from "mobx-react/native";
+
+const {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   TabBarIOS
-} from 'react-native';
+} = ReactNative;
 
 import Header from './Header';
 import TabBar from './TabBar.ios';
 import AddProject from './AddProject';
+import ProjectsList from './ProjectsList';
+import ProjectsStore from '../stores/projects';
+import Project from '../models/Project';
 
-class Projects extends Component {
+export default observer(class Projects extends Component {
+
+  componentWillMount() {
+    const _project = new Project('yo');
+    ProjectsStore.push(_project);
+  }
+
+  renderCreatingProject() {
+    this.props.navigator.push({
+      title: "Create project",
+      key: 'create-project',
+      component: AddProject
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Header {...this.props}/>
-        <TouchableOpacity onPress={() => {
-          this.props.navigator.push({
-            key: 'projects-add',
-            title: 'Add new project',
-            component: AddProject
-          })
-        }}>
-          <Text>Projects</Text>
-        </TouchableOpacity>
+        <Header rightAction={this.renderCreatingProject.bind(this)} {...this.props}/>
+        <ProjectsList projects={ProjectsStore}/>
       </View>
     );
   };
-}
-
-export default Projects;
+})
 
 const styles = StyleSheet.create({
   container: {
